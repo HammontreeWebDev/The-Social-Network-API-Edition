@@ -1,4 +1,4 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
   {
@@ -18,7 +18,7 @@ const userSchema = new Schema(
     thoughts: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'thoughts',
+        ref: 'thought',
       }
     ],
     friends: [
@@ -38,10 +38,10 @@ const userSchema = new Schema(
 
 // virtual that retrieves length of the user's friends on query
 userSchema
-.virtual('friendCount')
-.get(function () {
-  return `You have ${this.friends.length} friends!`
-})
+  .virtual('friendCount')
+  .get(function () {
+    return `You have ${this.friends.length} friends!`
+  })
 
 const User = model('user', userSchema);
 module.exports = User;
