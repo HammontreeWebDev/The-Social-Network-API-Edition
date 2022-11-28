@@ -1,4 +1,35 @@
-const { Schema, model } = require('mongoose');
+const { ObjectID } = require('bson');
+const { Schema, model, SchemaType } = require('mongoose');
+
+// reaction schema acting as a subdocument for the thought schema for the Thought Model to refer to
+const reactionSchema = new Schema(
+    {
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: new ObjectID,
+        },
+        reactionBody: {
+            type: String,
+            required: true,
+            maxLength: 280
+        },
+        username: {
+            type: String,
+            required: true
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        }
+
+    },
+    {
+        toJSON: {
+          getters: true,
+        },
+        id: false,
+      }
+)
 
 const thoughtSchema = new Schema(
     {
@@ -16,12 +47,8 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        reactions: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'reaction',
-            }
-        ]
+        // refer to previously created reactionSchema
+        reactions: [reactionSchema],
     },
     {
         toJSON: {
