@@ -1,5 +1,5 @@
 const { ObjectID } = require('bson');
-const { Schema, model, SchemaType } = require('mongoose');
+const { Schema, model, } = require('mongoose');
 
 // reaction schema acting as a subdocument for the thought schema for the Thought Model to refer to
 const reactionSchema = new Schema(
@@ -62,7 +62,7 @@ const thoughtSchema = new Schema(
 thoughtSchema
 .virtual('reactionCount')
 .get(function () {
-    return `You have ${this.reactions.length} reactions!`
+    return this.reactions.length
 })
 
 const Thought = model('thought', thoughtSchema);
