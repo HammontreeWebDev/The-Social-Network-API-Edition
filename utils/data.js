@@ -1,5 +1,7 @@
 const { ObjectID } = require('bson');
 
+// seed data - data created in routes will be more robust. 
+// this will serve for something to initially be able to pull and confirm that we can add seed data to the database
 const userData = [
     {
         "username": 'ferdinand03',
