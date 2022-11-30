@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { ObjectID } = require('bson');
 
 module.exports = {
     getAllUsers(req, res) {
@@ -22,7 +23,7 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
       },
       updateUser(req, res) {
-        User.findOneAndUpdate({_id: req.params.userId})
+        User.findOneAndUpdate({_id: req.params.userId}, req.body)
         .select('-__v')
         .then((user) => 
         !user
@@ -42,22 +43,28 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
       },
       deleteFriend(req, res) {
-        User.findOneAndDelete({id_: req.params.userId, friends: req.params.friendsId})
+        User.findOneAndDelete(
+          {_id: req.params.userId},
+          {$addToSet: {friends: req.params.friendsId}},
+        )
         .select('-__v')
         .then((user)=> 
         !user
         ? res.status(404).json({ message: 'No user with that ID'})
-        : res.json(user.friends)
+        : res.json(user)
         )
         .catch((err) => res.status(500).json(err));
       },
       addFriend(req, res) {
-        User.create({id_: req.params.userId, friends: req.params.friendsId})
+        User.findOneAndUpdate(
+          { _id: req.params.userId },
+          {$addToSet: {friends: req.params.friendsId}},
+          )
         .select('-__v')
         .then((user)=> 
         !user
         ? res.status(404).json({ message: 'No user with that ID'})
-        : res.json(user.friends)
+        : res.json(user)
         )
         .catch((err) => res.status(500).json(err));
       },

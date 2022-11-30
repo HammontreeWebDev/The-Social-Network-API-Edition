@@ -8,30 +8,35 @@ const userData = [
         "email": 'chickenboi@gmail.com',
         "thoughts": [],
         "friends": [],
+        "__v": 0,
     },
     {
         "username": 'Hangry23',
         "email": 'feedmepls@hotmail.com',
         "thoughts": [],
         "friends": [],
+        "__v": 0,
     },
     {
         "username": 'Froufrou938',
         "email": 'JohnsBootcampCourse@ucf.edu',
         "thoughts": [],
         "friends": [],
+        "__v": 0,
     },
     {
         "username": 'washbuckler23',
         "email": 'noGamesNoLyfe@aol.com',
         "thoughts": [],
         "friends": [],
+        "__v": 0,
     },
     {
         "username": 'Chuckwalla',
         "email": 'yugiMotoIsThePharoah@konami.com',
         "thoughts": [],
         "friends": [],
+        "__v": 0,
     },
 ];
 const thoughtData = [

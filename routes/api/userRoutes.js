@@ -21,7 +21,9 @@ router.route('/:userId')
     .delete(deleteUser);
 
 // route to add a new friend to user's friend list and also to delete one
-router.route(':userId/friends/:friendsId')
+// in the front end we'd be able to find out the friends UserID and pass that as the
+// friends Id.
+router.route('/:userId/friends/:friendsId')
 .post(addFriend)
 .delete(deleteFriend);
 
