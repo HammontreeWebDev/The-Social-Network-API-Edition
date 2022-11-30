@@ -38,7 +38,6 @@ module.exports = {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $set: req.body },
-            { runValidators: true, new: true }
         )
             .select('-__v')
             .then((thought) =>
@@ -59,23 +58,27 @@ module.exports = {
                         { new: true }
                     )
             )
-            .then((thought) =>{
+            .then((thought) => {
                 if (!thought) {
-                    res.status(404).json({message: 'The requested thought was deleted but there was no associated user ID found'})
+                    res.status(404).json({ message: 'The requested thought was deleted but there was no associated user ID found' })
                 }
                 else {
-                    res.status(200).json({message: 'Thought successfully deleted!'})
+                    res.status(200).json({ message: 'Thought successfully deleted!' })
                 }
             })
             .catch((err) => res.status(500).json(err));
     },
 
     createReaction(req, res) {
-        Thought.create({
-            req: req.body,
-            where: { _id: req.params.thoughtId }
-        })
-            .then((dbReactionData) => res.json(dbReactionData))
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
+        )
+            .then((dbReactionData) =>
+                !dbReactionData
+                    ? res.status(404).json({ message: 'Unable to add a reaction to a thought that does not exist!' })
+                    : res.status(200).json({message: "reaction successfully added"})
+            )
             .catch((err) => res.status(500).json(err));
     },
     deleteReaction(req, res) {

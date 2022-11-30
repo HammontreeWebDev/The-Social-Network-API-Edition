@@ -21,7 +21,7 @@ router.route('/:thoughtId')
     .delete(deleteThought);
 
 // route to create a new reaction and delete an existing one
-router.route(':thoughtId/reactions')
+router.route('/:thoughtId/reactions')
 .post(createReaction)
 .delete(deleteReaction);
 
