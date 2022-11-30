@@ -82,8 +82,15 @@ module.exports = {
             .catch((err) => res.status(500).json(err));
     },
     deleteReaction(req, res) {
-        Thought.findOneAndDelete({ _id: req.params.thoughtId })
-            .then((dbReactionData) => res.json(dbReactionData))
-            .catch((err) => res.status(500).json(err));
+        Thought.findOneAndUpdate(
+          { _id: req.params.thoughtId },
+          { $pull: {reactions: { reactionId: req.body.reactionId}}}
+        )
+          .then((dbThoughtData) =>
+            !dbThoughtData
+              ? res.status(404).json({ message: 'Unable to locate this specific thought... Try again!' })
+              : res.status(200).json({message: "reaction successfully deleted"})
+          )
+          .catch((err) => res.status(500).json(err));
+      },
     }
-}
