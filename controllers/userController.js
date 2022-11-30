@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Thought = require('../models/Thought');
 
 module.exports = {
     getAllUsers(req, res) {
@@ -34,8 +35,14 @@ module.exports = {
       deleteUser(req, res) {
         User.findOneAndDelete({_id: req.params.userId})
         .select('-__v')
-        .then((user) => 
-        !user
+        .then((deletedUser) => 
+        // tap into the Thought model and delete all thoughts that belong to the user to free up db space using the deleteMany method in conjuction with the mongoose operator $in
+        !deletedUser
+        ? res.status(404).json({ message: 'No user with that ID'})
+        : Thought.deleteMany({ _id: { $in: deletedUser.thoughts } })
+        )
+        .then((deletedUser) => 
+        !deletedUser
         ? res.status(404).json({ message: 'No user with that ID'})
         : res.json({ message: 'User successfully deleted'})
         )
