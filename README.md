@@ -13,6 +13,10 @@
   If you would like to test the routes for yourself, just clone or fork the repository to your local machine. Run `npm i` to install required dependencies and then run `npm start` to start the application. Feel free to test the routes for yourself in an application like Insomnia.
   ## Usage
   This application would work in conjuction with a front end database that allows users to successfully create, get, update, and delete users. They would also be able to add and delete friends off of their user list. In addition, they would be able to create, get , update, and delete thoughts (social posts) as well as create and delete reactions to other's thoughts (similar to replies on a post).
+
+  **Walkthrough Video:** <br>
+  https://watch.screencastify.com/v/CuSZ8N3zxRTWtldGYgox
+
   ## License
   The MIT License (https://opensource.org/licenses/MIT)
   ## Contributing
