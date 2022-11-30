@@ -19,22 +19,27 @@ module.exports = {
     },
     createThought(req, res) {
         Thought.create(req.body)
-        .then((dbThoughtData) => {
-            return User.findOneAndUpdate(
-              { _id: req.body.userId },
-              { $addToSet: { thoughts: dbThoughtData._id } },
-              { new: true }
-            );
-          })
+            .then((dbThoughtData) => {
+                return User.findOneAndUpdate(
+                    { _id: req.body.userId },
+                    { $addToSet: { thoughts: dbThoughtData._id } },
+                    { new: true }
+                );
+            })
             .then((dbThoughtData) => {
                 res.json(dbThoughtData)
             })
             .catch((err) => {
                 console.error(new Error);
-                res.status(500).json(err)});
+                res.status(500).json(err)
+            });
     },
     updateThought(req, res) {
-        Thought.findOneAndUpdate({ _id: req.params.thoughtId })
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
             .select('-__v')
             .then((thought) =>
                 !thought
