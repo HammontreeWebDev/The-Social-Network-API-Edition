@@ -43,9 +43,9 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
       },
       deleteFriend(req, res) {
-        User.findOneAndDelete(
-          {_id: req.params.userId},
-          {$addToSet: {friends: req.params.friendsId}},
+        User.findOneAndUpdate(
+          { _id: req.params.userId },
+          {$pull: {friends: req.params.friendsId}},
         )
         .select('-__v')
         .then((user)=> 
