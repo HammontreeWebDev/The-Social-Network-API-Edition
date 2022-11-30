@@ -23,7 +23,11 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
       },
       updateUser(req, res) {
-        User.findOneAndUpdate({_id: req.params.userId}, req.body)
+        User.findOneAndUpdate(
+          {_id: req.params.userId},
+          {$addToSet: {username: req.body.username}},
+          {$addToSet: {email: req.body.email}}
+          )
         .select('-__v')
         .then((user) => 
         !user
